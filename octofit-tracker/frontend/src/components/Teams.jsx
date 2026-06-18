@@ -23,6 +23,11 @@ const normalizeCollectionResponse = (payload) => {
 }
 
 function Teams({ apiBaseUrl }) {
+  const codespaceName = import.meta.env.VITE_CODESPACE_NAME
+  const endpoint = codespaceName
+    ? `https://${codespaceName}-8000.app.github.dev/api/teams/`
+    : `${apiBaseUrl}/api/teams/`
+
   const [teams, setTeams] = useState([])
   const [count, setCount] = useState(0)
   const [error, setError] = useState('')
@@ -36,7 +41,7 @@ function Teams({ apiBaseUrl }) {
       setError('')
 
       try {
-        const response = await fetch(`${apiBaseUrl}/api/teams/`, {
+        const response = await fetch(endpoint, {
           signal: controller.signal,
         })
 
@@ -60,7 +65,7 @@ function Teams({ apiBaseUrl }) {
     void loadTeams()
 
     return () => controller.abort()
-  }, [apiBaseUrl])
+  }, [endpoint])
 
   return (
     <section className="card card-muted rounded-4">

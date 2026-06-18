@@ -23,6 +23,11 @@ const normalizeCollectionResponse = (payload) => {
 }
 
 function Workouts({ apiBaseUrl }) {
+  const codespaceName = import.meta.env.VITE_CODESPACE_NAME
+  const endpoint = codespaceName
+    ? `https://${codespaceName}-8000.app.github.dev/api/workouts/`
+    : `${apiBaseUrl}/api/workouts/`
+
   const [workouts, setWorkouts] = useState([])
   const [count, setCount] = useState(0)
   const [error, setError] = useState('')
@@ -36,7 +41,7 @@ function Workouts({ apiBaseUrl }) {
       setError('')
 
       try {
-        const response = await fetch(`${apiBaseUrl}/api/workouts/`, {
+        const response = await fetch(endpoint, {
           signal: controller.signal,
         })
 
@@ -60,7 +65,7 @@ function Workouts({ apiBaseUrl }) {
     void loadWorkouts()
 
     return () => controller.abort()
-  }, [apiBaseUrl])
+  }, [endpoint])
 
   return (
     <section className="card card-muted rounded-4">

@@ -23,6 +23,11 @@ const normalizeCollectionResponse = (payload) => {
 }
 
 function Users({ apiBaseUrl }) {
+  const codespaceName = import.meta.env.VITE_CODESPACE_NAME
+  const endpoint = codespaceName
+    ? `https://${codespaceName}-8000.app.github.dev/api/users/`
+    : `${apiBaseUrl}/api/users/`
+
   const [users, setUsers] = useState([])
   const [count, setCount] = useState(0)
   const [error, setError] = useState('')
@@ -36,7 +41,7 @@ function Users({ apiBaseUrl }) {
       setError('')
 
       try {
-        const response = await fetch(`${apiBaseUrl}/api/users/`, {
+        const response = await fetch(endpoint, {
           signal: controller.signal,
         })
 
@@ -60,7 +65,7 @@ function Users({ apiBaseUrl }) {
     void loadUsers()
 
     return () => controller.abort()
-  }, [apiBaseUrl])
+  }, [endpoint])
 
   return (
     <section className="card card-muted rounded-4">
