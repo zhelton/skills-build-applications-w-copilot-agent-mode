@@ -16,6 +16,21 @@ const baseUrl = codespaceName
 
 app.use(express.json());
 
+app.get('/', (_req, res) => {
+  res.json({
+    message: 'OctoFit Tracker API',
+    baseUrl,
+    endpoints: [
+      '/api/health',
+      '/api/users',
+      '/api/teams',
+      '/api/activities',
+      '/api/leaderboard',
+      '/api/workouts',
+    ],
+  });
+});
+
 app.get('/api/health', (_req, res) => {
   res.json({ status: 'ok', baseUrl });
 });
