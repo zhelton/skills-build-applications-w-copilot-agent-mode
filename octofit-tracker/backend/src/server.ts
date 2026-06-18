@@ -1,6 +1,6 @@
 import express from 'express';
 
-import { connectDatabase, mongoUri } from './database';
+import { connectDatabase, mongoUri } from './config/database';
 import { ActivityModel } from './models/Activity';
 import { LeaderboardModel } from './models/Leaderboard';
 import { TeamModel } from './models/Team';
